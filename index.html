@@ -1,65 +1,120 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Counter</title>
-  <style>
-    body { margin:0; background:#0b1020; font-family: Arial, sans-serif; display:grid; place-items:center; height:100vh; }
-    .wrap { display:flex; gap:18px; align-items:center; }
-    .btn {
-      width:120px; height:120px; border-radius:22px;
-      display:grid; place-items:center;
-      background:#111a33; color:#fff; font-size:72px;
-      border:2px solid rgba(255,255,255,.18);
-      cursor:pointer; user-select:none;
-    }
-    .count {
-      min-width:220px; height:120px; border-radius:22px;
-      display:grid; place-items:center;
-      background:rgba(255,255,255,.08); color:#fff; font-size:64px;
-      border:2px solid rgba(255,255,255,.12);
-      padding:0 24px;
-    }
-    .small {
-      position: fixed; bottom: 22px; right: 22px;
-      font-size: 14px; color: rgba(255,255,255,.55);
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Immersive Counter</title>
+
+<style>
+body{
+margin:0;
+background:#0b1020;
+font-family:Arial, sans-serif;
+display:grid;
+place-items:center;
+height:100vh;
+color:white;
+}
+
+.wrap{
+display:flex;
+gap:25px;
+align-items:center;
+}
+
+.btn{
+width:120px;
+height:120px;
+border-radius:20px;
+display:grid;
+place-items:center;
+background:#111a33;
+font-size:70px;
+cursor:pointer;
+border:2px solid rgba(255,255,255,.2);
+user-select:none;
+}
+
+.count{
+min-width:220px;
+height:120px;
+border-radius:20px;
+display:grid;
+place-items:center;
+font-size:70px;
+background:rgba(255,255,255,.08);
+border:2px solid rgba(255,255,255,.2);
+}
+
+.reset{
+position:fixed;
+bottom:40px;
+padding:14px 30px;
+font-size:20px;
+border-radius:12px;
+background:#aa1c1c;
+cursor:pointer;
+border:none;
+color:white;
+}
+
+.reset:hover{
+background:#c72b2b;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="btn" id="minus">−</div>
-    <div class="count" id="count">0</div>
-    <div class="btn" id="plus">+</div>
-  </div>
-  <div class="small">Saved automatically</div>
 
-  <script>
-    const KEY = "immersive_counter_value";
+<div class="wrap">
+<div class="btn" id="minus">−</div>
+<div class="count" id="count">0</div>
+<div class="btn" id="plus">+</div>
+</div>
 
-    // Load saved value (or 0 if none)
-    let n = parseInt(localStorage.getItem(KEY) || "0", 10);
-    if (Number.isNaN(n)) n = 0;
+<button class="reset" id="reset">RESET</button>
 
-    const countEl = document.getElementById('count');
-    const render = () => { countEl.textContent = n; };
+<script>
 
-    const save = () => { localStorage.setItem(KEY, String(n)); };
+const KEY = "immersive_counter_value";
 
-    document.getElementById('plus').addEventListener('click', () => {
-      n += 1;
-      render();
-      save();
-    });
+// load saved value
+let n = parseInt(localStorage.getItem(KEY) || "0",10);
+if(isNaN(n)) n = 0;
 
-    document.getElementById('minus').addEventListener('click', () => {
-      n = Math.max(0, n - 1);
-      render();
-      save();
-    });
+const count = document.getElementById("count");
 
-    render();
-  </script>
+function render(){
+count.textContent = n;
+}
+
+function save(){
+localStorage.setItem(KEY,n);
+}
+
+document.getElementById("plus").onclick = () =>{
+n++;
+render();
+save();
+}
+
+document.getElementById("minus").onclick = () =>{
+n = Math.max(0,n-1);
+render();
+save();
+}
+
+document.getElementById("reset").onclick = () =>{
+if(confirm("Reset counter to 0?")){
+n = 0;
+render();
+save();
+}
+}
+
+render();
+
+</script>
+
 </body>
 </html>
