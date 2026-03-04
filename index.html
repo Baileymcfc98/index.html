@@ -1,1 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Counter</title>
+  <style>
+    body { margin:0; background:#0b1020; font-family: Arial, sans-serif; display:grid; place-items:center; height:100vh; }
+    .wrap { display:flex; gap:18px; align-items:center; }
+    .btn {
+      width:120px; height:120px; border-radius:22px;
+      display:grid; place-items:center;
+      background:#111a33; color:#fff; font-size:72px;
+      border:2px solid rgba(255,255,255,.18);
+      cursor:pointer; user-select:none;
+    }
+    .count {
+      min-width:220px; height:120px; border-radius:22px;
+      display:grid; place-items:center;
+      background:rgba(255,255,255,.08); color:#fff; font-size:64px;
+      border:2px solid rgba(255,255,255,.12);
+      padding:0 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="btn" id="minus">−</div>
+    <div class="count" id="count">0</div>
+    <div class="btn" id="plus">+</div>
+  </div>
 
+  <script>
+    let n = 0;
+    const countEl = document.getElementById('count');
+    const render = () => countEl.textContent = n;
+
+    document.getElementById('plus').addEventListener('click', () => { n += 1; render(); });
+    document.getElementById('minus').addEventListener('click', () => { n = Math.max(0, n - 1); render(); });
+
+    render();
+  </script>
+</body>
+</html>
