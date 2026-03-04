@@ -21,6 +21,10 @@
       border:2px solid rgba(255,255,255,.12);
       padding:0 24px;
     }
+    .small {
+      position: fixed; bottom: 22px; right: 22px;
+      font-size: 14px; color: rgba(255,255,255,.55);
+    }
   </style>
 </head>
 <body>
@@ -29,14 +33,31 @@
     <div class="count" id="count">0</div>
     <div class="btn" id="plus">+</div>
   </div>
+  <div class="small">Saved automatically</div>
 
   <script>
-    let n = 0;
-    const countEl = document.getElementById('count');
-    const render = () => countEl.textContent = n;
+    const KEY = "immersive_counter_value";
 
-    document.getElementById('plus').addEventListener('click', () => { n += 1; render(); });
-    document.getElementById('minus').addEventListener('click', () => { n = Math.max(0, n - 1); render(); });
+    // Load saved value (or 0 if none)
+    let n = parseInt(localStorage.getItem(KEY) || "0", 10);
+    if (Number.isNaN(n)) n = 0;
+
+    const countEl = document.getElementById('count');
+    const render = () => { countEl.textContent = n; };
+
+    const save = () => { localStorage.setItem(KEY, String(n)); };
+
+    document.getElementById('plus').addEventListener('click', () => {
+      n += 1;
+      render();
+      save();
+    });
+
+    document.getElementById('minus').addEventListener('click', () => {
+      n = Math.max(0, n - 1);
+      render();
+      save();
+    });
 
     render();
   </script>
