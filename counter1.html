@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Counter</title>
+
+<style>
+body{
+margin:0;
+background:#0b1020;
+font-family:Arial,sans-serif;
+display:grid;
+place-items:center;
+height:100vh;
+color:white;
+}
+
+.wrap{
+display:flex;
+gap:25px;
+align-items:center;
+}
+
+.btn{
+width:120px;
+height:120px;
+border-radius:20px;
+display:grid;
+place-items:center;
+background:#111a33;
+font-size:70px;
+cursor:pointer;
+border:2px solid rgba(255,255,255,.2);
+}
+
+.count{
+min-width:220px;
+height:120px;
+border-radius:20px;
+display:grid;
+place-items:center;
+font-size:70px;
+background:rgba(255,255,255,.08);
+border:2px solid rgba(255,255,255,.2);
+}
+
+.reset{
+position:fixed;
+bottom:40px;
+padding:14px 30px;
+font-size:20px;
+border-radius:12px;
+background:#aa1c1c;
+cursor:pointer;
+border:none;
+color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+<div class="btn" id="minus">−</div>
+<div class="count" id="count">0</div>
+<div class="btn" id="plus">+</div>
+</div>
+
+<button class="reset" id="reset">RESET</button>
+
+<script>
+
+const KEY = "counter_1";
+
+let n = parseInt(localStorage.getItem(KEY) || "0",10);
+
+const count = document.getElementById("count");
+
+function render(){
+count.textContent = n;
+}
+
+function save(){
+localStorage.setItem(KEY,n);
+}
+
+document.getElementById("plus").onclick = ()=>{
+n++;
+render();
+save();
+}
+
+document.getElementById("minus").onclick = ()=>{
+n = Math.max(0,n-1);
+render();
+save();
+}
+
+document.getElementById("reset").onclick = ()=>{
+if(confirm("Reset counter?")){
+n=0;
+render();
+save();
+}
+}
+
+render();
+
+</script>
+
+</body>
+</html>
